@@ -9,9 +9,14 @@ cd $HOME
 sudo apt update
 sudo apt install stow
 
-git clone git@github.com:kamaradclimber/Dotfiles.git
+if ! test -d .dotfiles; then
+  git clone git@github.com:kamaradclimber/Dotfiles.git .dotfiles
+fi
 
-for prog in git bash; do
+rm -f ~/.bashrc
+
+cd .dotfiles
+for prog in bash git; do
   echo "Will use stow on $prog"
   stow --dotfiles $prog --verbose 2 --ignore=setup
   if test -f $prog/setup; then
